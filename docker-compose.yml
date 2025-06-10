@@ -1,19 +1,12 @@
 version: '3.8'
 
 services:
-  nginx-proxy:
+  fxproxy:
     build: .
     ports:
-      - "3128:3128"
+      - "80:80"
     environment:
-      - REMOTE=http://127.0.0.1:30120  # Change this to your remote server
+      - REMOTE=http://10.10.0.2:30120  # Change this to your FiveM server IP:port
     volumes:
       - ./cache:/srv/cache
-      - ./logs:/var/log/nginx
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3128/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
